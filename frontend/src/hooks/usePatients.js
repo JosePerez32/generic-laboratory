@@ -1,4 +1,3 @@
-// frontend/src/hooks/usePatients.js
 import { useState, useEffect } from 'react';
 import { patientsService } from '../services/api';
 
@@ -13,9 +12,8 @@ export function usePatients() {
 
   const loadPatients = async () => {
     try {
-      setLoading(true);
       const response = await patientsService.getAll();
-      setPatients(response.data);
+      setPatients(response.data.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -26,7 +24,7 @@ export function usePatients() {
   const createPatient = async (patientData) => {
     try {
       const response = await patientsService.create(patientData);
-      setPatients(prev => [...prev, response.data]);
+      await loadPatients();
       return response.data;
     } catch (err) {
       setError(err.message);
@@ -34,11 +32,5 @@ export function usePatients() {
     }
   };
 
-  return {
-    patients,
-    loading,
-    error,
-    createPatient,
-    refresh: loadPatients
-  };
+  return { patients, loading, error, createPatient, refresh: loadPatients };
 }
