@@ -17,9 +17,9 @@ export default async function handler(req, res) {
   try {
     switch (req.method) {
       case 'GET':
-        const [patients] = await connection.execute(
-          'SELECT id, name, email, phone, birth_date, created_at FROM patients ORDER BY created_at DESC'
-        );
+      const [patients] = await connection.execute(
+        'SELECT Id as id, Nombre as name, Email as email, Telefono as phone, FechaNacimiento as birth_date, FechaRegistro as created_at FROM pacientes ORDER BY FechaRegistro DESC'
+      );
         res.status(200).json({ success: true, data: patients });
         break;
 
@@ -30,10 +30,10 @@ export default async function handler(req, res) {
           return res.status(400).json({ success: false, error: 'Name is required' });
         }
 
-        const [result] = await connection.execute(
-          'INSERT INTO patients (name, email, phone, birth_date) VALUES (?, ?, ?, ?)',
-          [name, email, phone, birth_date]
-        );
+      const [result] = await connection.execute(
+        'INSERT INTO pacientes (Nombre, Email, Telefono, FechaNacimiento) VALUES (?, ?, ?, ?)',
+        [name, email, phone, birth_date]
+      );
         
         res.status(201).json({ 
           success: true, 
@@ -65,3 +65,13 @@ export default async function handler(req, res) {
     await connection.end();
   }
 }
+
+const [patients] = await connection.execute(
+  'SELECT Id as id, Nombre as name, Email as email, Telefono as phone, FechaNacimiento as birth_date, FechaRegistro as created_at FROM pacientes WHERE Id = ?', 
+  [id]
+);
+// PUT - En api/patients/[id].js
+await connection.execute(
+  'UPDATE pacientes SET Nombre = ?, Email = ?, Telefono = ?, FechaNacimiento = ? WHERE Id = ?',
+  [name, email, phone, birth_date, id]
+);

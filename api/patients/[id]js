@@ -1,0 +1,57 @@
+import { getConnection } from '../utils/db.js';
+
+export default async function handler(req, res) {
+  const { id } = req.query;
+  
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  const connection = await getConnection();
+  
+  try {
+    switch (req.method) {
+      case 'GET':
+        const [patients] = await connection.execute(
+          'SELECT Id as id, Nombre as name, Email as email, Telefono as phone, FechaNacimiento as birth_date, FechaRegistro as created_at FROM pacientes WHERE Id = ?', 
+          [id]
+        );
+        if (patients.length === 0) {
+          return res.status(404).json({ success: false, error: 'Patient not found' });
+        }
+        res.status(200).json({ success: true, data: patients[0] });
+        break;
+
+      case 'PUT':
+        const { name, email, phone, birth_date } = req.body;
+        await connection.execute(
+          'UPDATE pacientes SET Nombre = ?, Email = ?, Telefono = ?, FechaNacimiento = ? WHERE Id = ?',
+          [name, email, phone, birth_date, id]
+        );
+        res.status(200).json({ success: true, message: 'Patient updated' });
+        break;
+
+      case 'DELETE':
+        await connection.execute('DELETE FROM pacientes WHERE Id = ?', [id]);
+        res.status(200).json({ success: true, message: 'Patient deleted' });
+        break;
+
+      default:
+        res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
+        res.status(405).json({ success: false, error: `Method ${req.method} Not Allowed` });
+    }
+  } catch (error) {
+    console.error('API Error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Database error',
+      message: error.message 
+    });
+  } finally {
+    await connection.end();
+  }
+}

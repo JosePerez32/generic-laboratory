@@ -15,24 +15,27 @@ export default async function handler(req, res) {
   try {
     switch (req.method) {
       case 'GET':
-        const [samples] = await connection.execute(`
-          SELECT 
-            s.id,
-            s.patient_id,
-            s.analysis_type_id,
-            s.collection_date,
-            s.status,
-            s.result,
-            s.result_date,
-            p.name as patient_name,
-            p.email as patient_email,
-            at.name as analysis_name,
-            at.price as analysis_price
-          FROM samples s
-          LEFT JOIN patients p ON s.patient_id = p.id
-          LEFT JOIN analysis_types at ON s.analysis_type_id = at.id
-          ORDER BY s.collection_date DESC
-        `);
+        // GET samples - REEMPLAZA la consulta:
+      const [samples] = await connection.execute(`
+        SELECT 
+          s.Id as id,
+          s.PacienteId as patient_id,
+          s.TipoAnalisisId as analysis_type_id,
+          s.FechaToma as collection_date,
+          s.Estado as status,
+          s.Resultado as result,
+          s.FechaResultado as result_date,
+          p.Nombre as patient_name,
+          p.Email as patient_email,
+          ta.Nombre as analysis_name,
+          ta.Precio as analysis_price
+        FROM muestras s
+        LEFT JOIN pacientes p ON s.PacienteId = p.Id
+        LEFT JOIN tiposanalisis ta ON s.TipoAnalisisId = ta.Id
+        ORDER BY s.FechaToma DESC
+      `);
+
+
         res.status(200).json({ success: true, data: samples });
         break;
 
@@ -47,8 +50,9 @@ export default async function handler(req, res) {
           });
         }
 
+        // POST sample
         const [result] = await connection.execute(
-          'INSERT INTO samples (patient_id, analysis_type_id, status) VALUES (?, ?, ?)',
+          'INSERT INTO muestras (PacienteId, TipoAnalisisId, Estado) VALUES (?, ?, ?)',
           [patient_id, analysis_type_id, status]
         );
         
