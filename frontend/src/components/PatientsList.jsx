@@ -1,19 +1,23 @@
 // frontend/src/components/PatientsList.jsx
 import { usePatients } from '../hooks/usePatients';
-import { user, mail, phone, calendar } from 'lucide-react';
+import { User, Mail, Phone, Calendar } from 'lucide-react';
 
 export function PatientsList() {
   const { patients, loading, error } = usePatients();
 
   if (loading) return <div className="text-center py-8">Cargando pacientes...</div>;
   if (error) return <div className="text-red-600 text-center py-8">Error: {error}</div>;
+  if (!patients || patients.length === 0) {
+    return <div>No hay pacientes aún.</div>;
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-200">
         <h2 className="text-xl font-semibold">Lista de Pacientes</h2>
         <p className="text-gray-600 text-sm">
-          Total: {patients.length} paciente(s)
+          
+          Total: {patients.length} paciente(s) {patients.length}
         </p>
       </div>
       
@@ -23,7 +27,7 @@ export function PatientsList() {
             <div className="flex items-start justify-between">
               <div className="flex items-start space-x-4">
                 <div className="bg-blue-100 p-3 rounded-full">
-                  <user className="w-6 h-6 text-blue-600" />
+                  <User className="w-6 h-6 text-blue-600" />
                 </div>
                 
                 <div>
@@ -34,21 +38,21 @@ export function PatientsList() {
                   <div className="mt-2 space-y-1">
                     {patient.email && (
                       <div className="flex items-center text-sm text-gray-600">
-                        <mail className="w-4 h-4 mr-2" />
+                        <Mail className="w-4 h-4 mr-2" />
                         {patient.email}
                       </div>
                     )}
                     
                     {patient.phone && (
                       <div className="flex items-center text-sm text-gray-600">
-                        <phone className="w-4 h-4 mr-2" />
+                        <Phone className="w-4 h-4 mr-2" />
                         {patient.phone}
                       </div>
                     )}
                     
                     {patient.birth_date && (
                       <div className="flex items-center text-sm text-gray-600">
-                        <calendar className="w-4 h-4 mr-2" />
+                        <Calendar className="w-4 h-4 mr-2" />
                         Nacimiento: {new Date(patient.birth_date).toLocaleDateString()}
                       </div>
                     )}

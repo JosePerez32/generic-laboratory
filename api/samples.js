@@ -1,17 +1,17 @@
+// api/samples/index.js
 import { getConnection } from './utils/db.js';
-
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.status(200).json({ ok: true, message: 'Funcionando...' });
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
-  const connection = await getConnection();
-  
   try {
+    const connection = await getConnection();
     if (req.method === 'GET') {
       const [samples] = await connection.execute(`
         SELECT 

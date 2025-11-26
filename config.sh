@@ -8,6 +8,7 @@ mkdir -p api/utils frontend/src/{components,hooks,services}
 
 # Instalar dependencias
 echo "📦 Instalando dependencias..."
+npm install axios
 npm init -y
 npm install mysql2 vercel
 

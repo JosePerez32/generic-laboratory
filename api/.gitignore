@@ -1,1 +1,10 @@
 .vercel
+
+# Environment variables
+.env
+api/.env
+
+# Database credentials
+*credentials*
+*password*
+
