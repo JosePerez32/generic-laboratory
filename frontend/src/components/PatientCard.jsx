@@ -11,7 +11,7 @@ export const PatientCard = ({ patient, onEdit, onDelete }) => (
       </span>
     </div>
     
-    <div className="grid grid-cols-2 gap-4 mb-4">
+    <div className="grid grid-cols-2 gap-6 mb-4">
       <div>
         <p className="text-sm text-gray-500">Edad</p>
         <p className="font-semibold">{patient.age || 'N/A'} años</p>

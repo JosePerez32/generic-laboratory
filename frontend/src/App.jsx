@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen min-w-screen bg-gray-50"> {/* ← Cambio aquí */}
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,14 +41,14 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8"> {/* ← Cambio aquí: grid-cols-2 */}
           {/* Sidebar - Patient Form */}
-          <div className="lg:col-span-1">
+          <div>
             <PatientForm onSubmit={handleCreatePatient} loading={loading} />
           </div>
 
           {/* Main Content - Patients List */}
-          <div className="lg:col-span-2">
+          <div>
             <PatientsList />
           </div>
         </div>

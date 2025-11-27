@@ -1,8 +1,10 @@
 // frontend/src/components/PatientsList.jsx
 import { usePatients } from '../hooks/usePatients';
 import { User, Mail, Phone, Calendar, Plus, Loader2, AlertCircle } from 'lucide-react';
+import { Eye, Edit2, Trash2 } from 'lucide-react';
 
-export function PatientsList() {
+
+export function PatientForm() {
   const { patients, loading, error } = usePatients();
 
   // Estados de carga y error con mejor diseño
@@ -105,7 +107,7 @@ export function PatientsList() {
                   </div>
                   
                   {/* Detalles */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 lx:grid-cols-3 gap-4">
                     {patient.email && (
                       <div className="flex items-center text-gray-600 group-hover:text-gray-700 transition-colors">
                         <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mr-3">
@@ -170,14 +172,19 @@ export function PatientsList() {
             
             {/* Acciones rápidas */}
             <div className="flex justify-end space-x-3 mt-6 pt-6 border-t border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button className="px-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors">
-                Ver detalles
+              <button className="flex items-center space-x-1.5 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors">
+                <Eye className="w-4 h-4" />
+                <span>Ver detalles</span>
               </button>
-              <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
-                Editar
+              
+              <button className="flex items-center space-x-1.5 px-4 py-2 text-sm font-medium text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-lg transition-colors">
+                <Edit2 className="w-4 h-4" />
+                <span>Editar</span>
               </button>
-              <button className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
-                Eliminar
+              
+              <button className="flex items-center space-x-1.5 px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
+                <Trash2 className="w-4 h-4" />
+                <span>Eliminar</span>
               </button>
             </div>
           </div>
@@ -190,10 +197,10 @@ export function PatientsList() {
           <p>
             Mostrando <span className="font-semibold">{patients.length}</span> paciente{patients.length !== 1 ? 's' : ''}
           </p>
-          <p className="flex items-center">
-            <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+          <div className="flex items-center">
+            <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
             Sistema actualizado
-          </p>
+          </div>
         </div>
       </div>
     </div>
