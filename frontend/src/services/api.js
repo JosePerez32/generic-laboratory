@@ -50,7 +50,7 @@ api.interceptors.response.use(
 export const patientsService = {
   getAll: () => {
     const fullUrl = API_BASE + '/patients';
-    console.log('🔍 Full URL:', fullUrl);
+    console.log('🔍 Hola Full URL:', fullUrl);
     return api.get('patients');
   },
   getById: (id) => api.get(`patients/${id}`),
