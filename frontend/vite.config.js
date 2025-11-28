@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        // target: 'http://localhost:3000',
+        target: 'http://https://idk-five-liard.vercel.app',
         changeOrigin: true,
         secure: false
       }
