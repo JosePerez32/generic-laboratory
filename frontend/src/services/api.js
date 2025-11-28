@@ -1,6 +1,6 @@
 import axios from 'axios';
 // const API_BASE = 'http://localhost:3000/api';
-const API_BASE = 'http://https://idk-five-liard.vercel.app/api';
+const API_BASE = 'https://idk-five-liard.vercel.app/api';
 const api = axios.create({
   baseURL: API_BASE,
   timeout: 10000,
@@ -50,7 +50,7 @@ api.interceptors.response.use(
 export const patientsService = {
   getAll: () => {
     const fullUrl = API_BASE + '/patients';
-    console.log('🔍 Hola Full URL:', fullUrl);
+    console.log('🔍Full URL:', fullUrl);
     return api.get('patients');
   },
   getById: (id) => api.get(`patients/${id}`),
