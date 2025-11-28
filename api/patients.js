@@ -10,6 +10,7 @@ export default async function handler(req, res) {
   }
   try {
     const connection = await getConnection();
+    const welcomeHTML = `<h1>🚀 MediTrack API - Pacientes Endpoint</h1>`
     switch (req.method) {
       case 'GET':
         const [patients] = await connection.execute(
