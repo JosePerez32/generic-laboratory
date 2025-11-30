@@ -1,6 +1,7 @@
 // api/samples/index.js
 import { getConnection } from './utils/db.js';
 export default async function handler(req, res) {
+  res.status(200).json({ ok: true, message: 'Funcionando...' });
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
           s.Resultado as result,
           p.Nombre as patient_name,
           ta.Nombre as analysis_name
-        FROM Muestras s
+        FROM muestras s
         LEFT JOIN Pacientes p ON s.PacienteId = p.Id
         LEFT JOIN TiposAnalisis ta ON s.TipoAnalisisId = ta.Id
         ORDER BY s.FechaToma DESC

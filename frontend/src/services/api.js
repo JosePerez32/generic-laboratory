@@ -2,7 +2,7 @@ import axios from 'axios';
 // const API_BASE = 'http://localhost:3000/api';
 //const API_BASE = 'http://localhost:3000/api' || 'https://idk-five-liard.vercel.app/api';
 const API_BASE = import.meta.env.PROD 
-  ? 'https://idk-five-liard.vercel.app/api'  // Tu backend en Vercel
+  ? 'https://idk-five-liard.vercel.app/api'  // Backend en Vercel
   : 'http://localhost:3000/api';              // Desarrollo local
 
 const api = axios.create({
