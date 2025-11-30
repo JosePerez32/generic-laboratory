@@ -63,8 +63,11 @@ export const patientsService = {
 };
 
 export const samplesService = {
-  getAll: () => api.get('samples'),
-  create: (data) => api.post('samples', data),
-  updateStatus: (id, status) => api.put(`samples/${id}`, { status }),
-  updateResult: (id, result) => api.put(`samples/${id}/result`, { result }),
+  getAll: () => api.get('/samples'),
+  getById: (id) => api.get(`/samples/${id}`),
+  create: (data) => api.post('/samples', data),
+  update: (id, data) => api.put(`/samples/${id}`, data),
+  updateStatus: (id, status) => api.put(`/samples/${id}/status`, { status }),
+  updateResult: (id, result) => api.put(`/samples/${id}/result`, { result }),
+  delete: (id) => api.delete(`/samples/${id}`),
 };
