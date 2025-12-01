@@ -1,20 +1,19 @@
 // api/utils/db.js
 import mysql from 'mysql2/promise';
 
-export async function getConnection() {
-  return await mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: {
-      ca: process.env.AIVEN_CA_CERT.replace(/\\n/g, '\n'), // ← Convierte \n a saltos reales
-      rejectUnauthorized: true
-    },
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-  });
-}
-export default { getConnection };
+const pool = mysql.createPool({ //
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: process.env.AIVEN_CA_CERT ? {
+    ca: process.env.AIVEN_CA_CERT.replace(/\\n/g, '\n'),
+    rejectUnauthorized: true
+  } : false,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+export default pool;

@@ -7,7 +7,7 @@ const API_BASE = import.meta.env.PROD
 
 const api = axios.create({
   baseURL: API_BASE,
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -51,6 +51,13 @@ api.interceptors.response.use(
 //     console.log('🔄 Fetching patients from:', API_BASE + '/patients');
 //     return api.get('/patients');
 //   },
+// export const patientsService = {
+//   getAll: () => api.get('/patients'), // ← CON barra
+//   getById: (id) => api.get(`/patients/${id}`),
+//   create: (data) => api.post('/patients', data),
+//   update: (id, data) => api.put(`/patients/${id}`, data),
+//   delete: (id) => api.delete(`/patients/${id}`),
+// };
 export const patientsService = {
   getAll: () => {
     const fullUrl = API_BASE + '/patients';

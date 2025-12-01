@@ -5,7 +5,7 @@ import { SampleForm } from './SampleForm';
 import { Beaker, Plus, Loader2, AlertCircle, Edit, Trash2, Play, Check, FileText } from 'lucide-react';
 
 export function SamplesList() {
-  const { samples, loading, error, createSample, updateSampleStatus, updateSampleResult, deleteSample } = useSamples();
+  const {samples = [], loading, error, createSample, updateSampleStatus, updateSampleResult, deleteSample } = useSamples();
   const [showForm, setShowForm] = useState(false);
   const [editingSample, setEditingSample] = useState(null);
   const [deletingSample, setDeletingSample] = useState(null);

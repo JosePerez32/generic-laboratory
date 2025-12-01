@@ -5,10 +5,19 @@ import { useState } from 'react';
 import { PatientForm } from './PatientForm';
 
 export function PatientsList() {
-  const { patients, loading, error, createPatient, updatePatient, deletePatient } = usePatients();
+  const { patients=[], loading, error, createPatient, updatePatient, deletePatient } = usePatients();
   const [showForm, setShowForm] = useState(false);
   const [editingPatient, setEditingPatient] = useState(null);
     const [deletingPatient, setDeletingPatient] = useState(null);
+      console.log('🎪 PatientsList recibió:', patients);
+
+    // Agrega esto temporalmente para debuggear:
+console.log('API Response patients:', patients);
+console.log('Type:', typeof patients);
+console.log('Is Array?', Array.isArray(patients));
+  console.log('🔍 Patients en component:', patients);
+  console.log('🔍 Loading:', loading);
+  console.log('🔍 Error:', error);
   // Función para manejar el envío del formulario
   const handleFormSubmit = async (formData) => {
     try {
@@ -96,8 +105,11 @@ export function PatientsList() {
         </div>
       </div>
   }
-
-  return (
+        if (!patients || !Array.isArray(patients)) {
+          console.log('⚠️ patients no es array:', patients);
+          return <div>Error: patients no es un array válido</div>;
+        }
+        return (
   <>
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         {/* Header */}
@@ -105,9 +117,12 @@ export function PatientsList() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold text-white">Gestión de Pacientes</h2>
-              <p className="text-primary-100 mt-1">
-                Total: {patients.length} paciente{patients.length !== 1 ? 's' : ''}
-              </p>
+              {/* <p className="text-primary-100 mt-1">
+                Total: {patients.length} paciente{patients.length !== 1 ? 's' : ''} */}
+                <p className="text-primary-100 mt-1">
+                  Total: {(patients || []).length} paciente{(patients || []).length !== 1 ? 's' : ''}
+                </p>  
+              {/* </p> */}
             </div>
             <button 
               onClick={handleCreate}
@@ -122,6 +137,7 @@ export function PatientsList() {
         {/* Lista de pacientes */}
         <div className="divide-y divide-gray-100">
           {patients.map((patient, index) => (
+          /* {(patients || []).map((patient, index) => ( */
             <div 
               key={patient.id} 
               className="p-8 hover:bg-gradient-to-r hover:from-primary-50/50 hover:to-white transition-all duration-300 group"
